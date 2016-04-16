@@ -18,11 +18,17 @@ public class InputManager extends GLFWKeyCallback{
 	 *  sent to the opponent so that states can be replicated.
 	 **/
 	public static boolean[] keys = new boolean[GLFW_KEY_LAST];
-	@Override
 	
 	/* Update the values in the array */
 	public void invoke(long window, int key, int scancode, int action, int mods) {
+		if (key == GLFW_KEY_UNKNOWN){
+			System.out.println("Unknown Key is pressed!");
+		}
 		keys[key] = action == GLFW_PRESS;
+		
+		if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
+			glfwSetWindowShouldClose(window, GLFW_TRUE);
+		}
 	}
 
 }
