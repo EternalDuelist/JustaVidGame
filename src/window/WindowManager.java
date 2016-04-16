@@ -25,14 +25,9 @@ import org.lwjgl.glfw.GLFWVidMode;
 public class WindowManager {
     private GLFWErrorCallback errorCallback;
     private GLFWKeyCallback   keyCallback;
-    private int WIDTH;
-    private int HEIGHT;
+    private int WIDTH = 640;
+    private int HEIGHT = 480;
     private long window;	// The window handle
-
-    public WindowManager(){
-    	this.WIDTH = 640;
-    	this.HEIGHT = 480;
-    }
     
     public void initializeWindow() {
     	// Setup an error callback. The default implementation
@@ -66,7 +61,7 @@ public class WindowManager {
 
         glfwSwapInterval(1);				// Enable v-sync. Also sets the frame rate to 60fps?
         glfwShowWindow(window);				// Make the window visible
-}
+    }
 
     public long window() {
     	return window;
