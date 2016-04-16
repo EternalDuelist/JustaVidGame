@@ -1,9 +1,9 @@
-import org.lwjgl.*;
+package main;
 import org.lwjgl.glfw.*;
-import org.lwjgl.opengl.*;
- 
+
+import window.InputManager;
+
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.*;
  
 public class JustaVidGame {
@@ -44,13 +44,7 @@ public class JustaVidGame {
             throw new RuntimeException("Failed to create the GLFW window");
  
         // Setup a key callback. It will be called every time a key is pressed, repeated or released.
-        glfwSetKeyCallback(window, keyCallback = new GLFWKeyCallback() {
-            @Override
-            public void invoke(long window, int key, int scancode, int action, int mods) {
-                if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
-                    glfwSetWindowShouldClose(window, GLFW_TRUE); // We will detect this in our rendering loop
-            }
-        });
+        glfwSetKeyCallback(window, keyCallback = new InputManager());
  
         // Get the resolution of the primary monitor
         GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
@@ -65,19 +59,10 @@ public class JustaVidGame {
     }
  
     private void loop() {
-        // This line is critical for LWJGL's interoperation with GLFW's
-        // OpenGL context, or any context that is managed externally.
-        // LWJGL detects the context that is current in the current thread,
-        // creates the GLCapabilities instance and makes the OpenGL
-        // bindings available for use.
-        GL.createCapabilities();
-        
-        glClearColor(1.0f, 0.0f, 0.0f, 0.0f); // Set the clear color
- 
+    	
         // Run the rendering loop until the user has attempted to close
         // the window or has pressed the ESCAPE key.
-        while ( glfwWindowShouldClose(window) == GLFW_FALSE ) {
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		// clear the framebuffer
+        while (glfwWindowShouldClose(window) == GLFW_FALSE) {
  
             glfwSwapBuffers(window);								// draws on the screen at a frame rate specified in init
             glfwPollEvents();										// checks for user input and takes an action based on the key callback
