@@ -9,6 +9,8 @@ package main;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
+import org.lwjgl.opengl.GL;
+
 import window.WindowManager;
 import graphics.GraphicsManager;
 import engine.VisibleGameObject;
@@ -16,13 +18,14 @@ import engine.VisibleGameObject;
 public class JustaVidGame {
     // We need to strongly reference callback instances.
 	
-    private void loop(WindowManager WMan, GraphicsManager GMan, VisibleGameObject box) {
-    	long window = WMan.window();
+    private void loop(long window, VisibleGameObject box) {
         // Run the rendering loop until the user has attempted to close
         // the window
+    	GraphicsManager.shader1.start();
         while (glfwWindowShouldClose(window) == GLFW_FALSE) {
         	glfwPollEvents();			// checks for user input and takes an action based on the key callback
-        	GMan.update();
+        	
+        	GraphicsManager.update();
         	box.draw();
         	glfwSwapBuffers(window);	// draws on the screen at a frame rate specified in init
         }
@@ -30,16 +33,17 @@ public class JustaVidGame {
     
     private void run(){
     	WindowManager WMan = new WindowManager();
-    	GraphicsManager GMan = new GraphicsManager();
     	VisibleGameObject box;
-    	
     	try {
             WMan.initializeWindow();
-            GMan.initializeGraphics(WMan.window());
-            box = new VisibleGameObject(1);
-            System.out.println("OpenGL: " + glGetString(GL_VERSION));
-            loop(WMan, GMan, box);
+            GraphicsManager.initializeGraphics();
+            box = new VisibleGameObject();
+            
+            loop(WMan.window(), box);
+            
             glfwDestroyWindow(WMan.window());	// Destroy window and window callbacks
+        } catch (Exception e){
+        	System.out.println("swag");
         } finally {
             glfwTerminate();					// Terminate GLFW and free the GLFWErrorCallback
         }

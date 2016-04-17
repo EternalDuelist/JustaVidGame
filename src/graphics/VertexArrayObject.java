@@ -11,14 +11,15 @@ public class VertexArrayObject {
 
 	private static final int VERTEX_ATTRIB = 0;
 	private static final int TCOORD_ATTRIB = 1;
+	private int vaoID;
 	
 	public VertexArrayObject(float[] vertices, byte[] indices){
 		createArrayObject(vertices, indices);
 	}
 	
 	private void createArrayObject(float[] vertices, byte[] indices){
-		int vao = glGenVertexArrays();
-		glBindVertexArray(vao);
+		this.vaoID = glGenVertexArrays();
+		glBindVertexArray(vaoID);
 		
 		createVericesBuffer(vertices);
 		createIndicesBuffer(indices);
@@ -38,6 +39,10 @@ public class VertexArrayObject {
 		glBufferData(GL_ARRAY_BUFFER, createFloatBuffer(vertices), GL_STATIC_DRAW);
 		glVertexAttribPointer(VERTEX_ATTRIB, 3, GL_FLOAT, false, 0, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+	
+	public int getvaoID() {
+		return this.vaoID;
 	}
 	
 }

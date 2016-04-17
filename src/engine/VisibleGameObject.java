@@ -26,10 +26,10 @@ public class VisibleGameObject {
 	
 	private VertexArrayObject vao;
 	
-	public VisibleGameObject(int vaoID){
-		this.vaoID = vaoID;
+	public VisibleGameObject(){
 		this.count = indices.length;
-		this.vao = new VertexArrayObject(this.vertices, this.indices);		
+		this.vao = new VertexArrayObject(this.vertices, this.indices);
+		this.vaoID = vao.getvaoID();
 	}
 	
 	public void draw(){
