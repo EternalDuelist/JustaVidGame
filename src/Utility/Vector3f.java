@@ -1,4 +1,4 @@
-package graphics;
+package Utility;
 
 public class Vector3f {
 	public float x, y, z;

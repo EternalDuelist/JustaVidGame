@@ -6,7 +6,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 import graphics.VertexArrayObject;
 
-public class VisibleGameObject {
+public class GameObject {
 
 	public int vaoID;
 	public int count;
@@ -26,7 +26,7 @@ public class VisibleGameObject {
 	
 	private VertexArrayObject vao;
 	
-	public VisibleGameObject(){
+	public GameObject(){
 		this.count = indices.length;
 		this.vao = new VertexArrayObject(this.vertices, this.indices);
 		this.vaoID = vao.getvaoID();

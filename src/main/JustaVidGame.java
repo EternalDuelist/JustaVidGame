@@ -13,12 +13,13 @@ import org.lwjgl.opengl.GL;
 
 import window.WindowManager;
 import graphics.GraphicsManager;
-import engine.VisibleGameObject;
+import engine.GameObject;
+import java.util.concurrent.*;
  
-public class JustaVidGame {
+public class JustaVidGame implements Executor{
     // We need to strongly reference callback instances.
 	
-    private void loop(long window, VisibleGameObject box) {
+    private void loop(long window, GameObject box) {
         // Run the rendering loop until the user has attempted to close
         // the window
     	GraphicsManager.shader1.start();
@@ -33,11 +34,11 @@ public class JustaVidGame {
     
     private void run(){
     	WindowManager WMan = new WindowManager();
-    	VisibleGameObject box;
+    	GameObject box;
     	try {
             WMan.initializeWindow();
             GraphicsManager.initializeGraphics();
-            box = new VisibleGameObject();
+            box = new GameObject();
             
             loop(WMan.window(), box);
             
@@ -52,4 +53,10 @@ public class JustaVidGame {
     public static void main(String[] args) {
     	new JustaVidGame().run();
     }
+
+	@Override
+	public void execute(Runnable arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 }
