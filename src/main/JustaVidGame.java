@@ -16,8 +16,9 @@ import graphics.GraphicsManager;
 import engine.GameObject;
 import java.util.concurrent.*;
  
-public class JustaVidGame implements Executor{
+public class JustaVidGame {
     // We need to strongly reference callback instances.
+	public static GameObject testObject;
 	
     private void loop(long window, GameObject box) {
         // Run the rendering loop until the user has attempted to close
@@ -27,6 +28,7 @@ public class JustaVidGame implements Executor{
         	glfwPollEvents();			// checks for user input and takes an action based on the key callback
         	
         	GraphicsManager.update();
+        	this.testObject = box;
         	box.draw();
         	glfwSwapBuffers(window);	// draws on the screen at a frame rate specified in init
         }
@@ -39,12 +41,11 @@ public class JustaVidGame implements Executor{
             WMan.initializeWindow();
             GraphicsManager.initializeGraphics();
             box = new GameObject();
+            this.testObject = box;
             
             loop(WMan.window(), box);
             
             glfwDestroyWindow(WMan.window());	// Destroy window and window callbacks
-        } catch (Exception e){
-        	System.out.println("swag");
         } finally {
             glfwTerminate();					// Terminate GLFW and free the GLFWErrorCallback
         }
@@ -53,10 +54,4 @@ public class JustaVidGame implements Executor{
     public static void main(String[] args) {
     	new JustaVidGame().run();
     }
-
-	@Override
-	public void execute(Runnable arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 }

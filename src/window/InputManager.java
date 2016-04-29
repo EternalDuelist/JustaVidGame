@@ -5,6 +5,10 @@
 package window;
 
 import org.lwjgl.glfw.GLFWKeyCallback;
+
+import engine.GameObject;
+import main.JustaVidGame;
+
 import static org.lwjgl.glfw.GLFW.*;
 
 public class InputManager extends GLFWKeyCallback{
@@ -21,13 +25,35 @@ public class InputManager extends GLFWKeyCallback{
 	
 	/* Update the values in the array */
 	public void invoke(long window, int key, int scancode, int action, int mods) {
+		GameObject player = JustaVidGame.testObject;
 		if (key == GLFW_KEY_UNKNOWN){
 			System.out.println("Unknown Key is pressed!");
 		}
+		
 		keys[key] = action == GLFW_PRESS;
 		
 		if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
 			glfwSetWindowShouldClose(window, GLFW_TRUE);
+		}
+		
+		else if (key == GLFW_KEY_DOWN && (action == GLFW_PRESS || action == GLFW_REPEAT) ) {
+			player.addPosition(-0.1f, 0.0f, 0.0f);
+		}
+		
+		else if (key == GLFW_KEY_UP && (action == GLFW_PRESS || action == GLFW_REPEAT) ) {
+			player.addPosition(0.1f, 0.0f, 0.0f);
+		}
+		
+		else if (key == GLFW_KEY_LEFT && (action == GLFW_PRESS || action == GLFW_REPEAT) ) {
+			player.addPosition(0.0f, -0.1f, 0.0f);
+		}
+		
+		else if (key == GLFW_KEY_RIGHT && (action == GLFW_PRESS || action == GLFW_REPEAT) ) {
+			player.addPosition(0.0f, 0.1f, 0.0f);
+		}
+		
+		else if (key == GLFW_KEY_SPACE && (action == GLFW_PRESS || action == GLFW_REPEAT) ) {
+			player.addPosition(0.0f, 0.0f, 0.1f);
 		}
 	}
 
